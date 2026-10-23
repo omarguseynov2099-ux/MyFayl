@@ -11,33 +11,37 @@ int main()
     }
     char Buk[101];
     scanf("%s", Buk);
-
-    int i = 0;
-    int j = 0;
     int cnt = 0;
 
-    while (j < N)
+    int mas_buk[26] = {0};
+    for (int i = 0; Buk[i] != '\0'; i++)
     {
-        int flag = 1;
-        while (Buk[i] != '\0' && Buk[i] != '\n')
-        {
-            for (int c = 0; arr[j][c] != '\n' && arr[j][c] != '\0'; c++)
-            {
-                if (Buk[i] != arr[j][c])
-                {
-                    flag = 0;
-                }
-            }
-            i++;
-            if (flag == 1)
-            {
-                cnt++;
-            }
-            flag = 1;
-            i = 0;
-        }
-        j++;
+        mas_buk[Buk[i] - 'a']++;
     }
+
+    for (int i = 0; i < N; i++)
+    {
+        int word_count[26] = {0};
+        int can_form = 1;
+
+        for (int j = 0; arr[i][j] != '\0'; j++)
+        {
+            int idx = arr[i][j] - 'a';
+            word_count[idx]++;
+
+            if (word_count[idx] > mas_buk[idx])
+            {
+                can_form = 0;
+                break;
+            }
+        }
+
+        if (can_form)
+        {
+            cnt++;
+        }
+    }
+
     printf("%d", cnt);
     return 0;
 }
